@@ -1,0 +1,265 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* ===== LANDING ===== */
+
+.landing {
+    background: url('./assets/woman-s-hand-is-holding-many-coins.jpg') no-repeat center center/cover;
+    height: 100vh;
+}
+
+.overlay {
+    background: linear-gradient(rgba(8, 40, 30, 0.75), rgba(4, 20, 15, 0.85));
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.content {
+    color: white;
+    max-width: 700px;
+}
+
+.arabic {
+    font-family: 'Amiri', serif;
+    font-size: 26px;
+    margin-bottom: 20px;
+    color: #f5d76e;
+}
+
+h1 {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.subtitle {
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+.btn {
+    padding: 12px 35px;
+    background: linear-gradient(45deg, #c9a227, #f5d76e);
+    color: #063a2d;
+    font-weight: 600;
+    border-radius: 50px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* ===== CALCULATOR ===== */
+
+.calculator-page {
+    /* background: linear-gradient(135deg, #052e26, #031f1a); */
+    background: url('./assets/heap-chocolate-coins.jpg') no-repeat center center/cover;
+    min-height: 100vh;
+    padding: 20px 20px;
+    color: white;
+    position: relative;
+}
+
+.calculator-page .overlay{
+    background: rgba(8, 40, 30, 0.75);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    /* justify-content: center; */
+    /* align-items: center; */
+}
+
+.bg-img {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    /* object-fit: ; */
+    z-index: -2;
+    opacity: 0.5;
+}
+
+.container {
+    height: 500px;
+    /* Fixed height */
+    max-width: 1000px;
+    margin: 40px auto;
+    overflow-y: auto;
+    /* Scroll inside container */
+
+    background: linear-gradient(135deg,
+            rgba(17, 77, 58, 0.95),
+            rgba(17, 77, 58, 0.85));
+
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(245, 215, 110, 0.15);
+}
+.form-grid {
+    display: grid;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+input {
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+}
+
+small {
+    color: #f5d76e;
+    font-size: 12px;
+}
+
+.liveRates {
+    color: #f5d76e;
+    margin-bottom: 15px;
+}
+
+.action-buttons button {
+    margin: 10px 10px 20px 0;
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    background: #f5d76e;
+    color: #063a2d;
+    font-weight: 600;
+}
+
+.history-item {
+    background: #0d3b2e;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
+}
+
+
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(245, 215, 110, 0.6);
+}
+
+
+/* Firefox */
+.container {
+    scrollbar-width: thin;
+    scrollbar-color: #d4af37 rgba(255, 255, 255, 0.05);
+}
+
+/* Chrome, Edge, Safari */
+.container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    visibility: hidden;
+}
+
+.container::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #d4af37, #f5d76e);
+    border-radius: 20px;
+    box-shadow: 0 0 8px rgba(245, 215, 110, 0.4);
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #f5d76e, #d4af37);
+}
+
+
+
+
+/* ===== MODAL ===== */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #114d3a, #063a2d);
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 0 25px rgba(245, 215, 110, 0.3);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-content h3 {
+    color: #f5d76e;
+    margin-bottom: 10px;
+}
+
+.modal-content button {
+    margin-top: 15px;
+    padding: 8px 20px;
+    border-radius: 25px;
+    border: none;
+    background: #f5d76e;
+    color: #063a2d;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
+/* ===== NISAB STATUS ===== */
+
+.nisab-box {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.above-nisab {
+    background: rgba(46, 204, 113, 0.15);
+    color: #2ecc71;
+    border: 1px solid #2ecc71;
+}
+
+.below-nisab {
+    background: rgba(231, 76, 60, 0.15);
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+}

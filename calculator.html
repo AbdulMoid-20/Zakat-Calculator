@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ramadan Zakat Calculator</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body class="calculator-page">
+
+    <img src="./assets/woman-s-hand-is-holding-many-coins.jpg" class="bg-img" alt="">
+    <div class="overlay">
+
+        <div class="container zakat-scroll">
+
+            <h2>Zakat Calculator (PKR)</h2>
+
+            <p id="liveRates" class="liveRates"></p>
+
+            <div class="form-grid">
+
+                <label>Gold Weight (grams)</label>
+                <input type="number" id="goldWeight">
+                <small>1 Tola = 11.66 grams</small>
+
+                <label>Silver Weight (grams)</label>
+                <input type="number" id="silverWeight">
+                <small>1 Tola = 11.66 grams</small>
+
+                <label>Cash in Hand (PKR)</label>
+                <input type="number" id="cash">
+
+                <label>Bank Balance (PKR)</label>
+                <input type="number" id="bank">
+
+                <label>Business Assets (PKR)</label>
+                <input type="number" id="business">
+
+                <label>Liabilities / Loans (PKR)</label>
+                <input type="number" id="liabilities">
+
+            </div>
+
+            <button class="btn" onclick="calculateZakat()">Calculate Zakat</button>
+
+            <p id="nisabInfo" class="nisab-box"></p>
+
+            <h3 id="result"></h3>
+
+            <div class="action-buttons">
+                <button onclick="generatePDF()">Download PDF Receipt</button>
+                <button onclick="saveHistory()">Save Calculation</button>
+            </div>
+
+            <h3>Previous Calculations</h3>
+            <div id="history"></div>
+
+        </div>
+
+    </div>
+
+    <!-- ===== ISLAMIC MODAL ===== -->
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Notice</h3>
+            <p id="modalMessage"></p>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+
+        /* ================= LIVE GOLD & SILVER RATE ================= */
+
+        let goldRatePKR = 0;
+        let silverRatePKR = 0;
+        let zakatAmount = 0;
+        let netWorth = 0;
+
+        async function fetchRates() {
+            try {
+
+                // Get Gold & Silver price (USD per ounce)
+                const metalRes = await fetch("https://data-asg.goldprice.org/dbXRates/USD");
+                const metalData = await metalRes.json();
+
+                let goldUSD = metalData.items[0].xauPrice; // gold per ounce
+                let silverUSD = metalData.items[0].xagPrice; // silver per ounce
+
+                // Get USD to PKR rate
+                const rateRes = await fetch("https://open.er-api.com/v6/latest/USD");
+                const rateData = await rateRes.json();
+
+                let usdToPkr = rateData.rates.PKR;
+
+                // Convert ounce to gram
+                goldRatePKR = (goldUSD / 31.1035) * usdToPkr;
+                silverRatePKR = (silverUSD / 31.1035) * usdToPkr;
+
+                document.getElementById("liveRates").innerHTML =
+                    "Live Rates — Gold: PKR " + goldRatePKR.toFixed(0) +
+                    "/g | Silver: PKR " + silverRatePKR.toFixed(0) + "/g";
+
+            } catch (error) {
+                showModal("Rate Error", "Live gold & silver rates unavailable. Please refresh.");
+            }
+        }
+
+        fetchRates();
+
+        /* ===== MODAL FUNCTIONS ===== */
+
+        function showModal(title, message) {
+            document.getElementById("modalTitle").innerText = title;
+            document.getElementById("modalMessage").innerText = message;
+            document.getElementById("customModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("customModal").style.display = "none";
+        }
+
+
+        /* ================= CALCULATION ================= */
+
+        function calculateZakat() {
+
+            if (goldRatePKR === 0 || silverRatePKR === 0) {
+                showModal("Loading", "Live rates are still loading. Please wait.");
+                return;
+            }
+
+
+            let goldWeight = parseFloat(document.getElementById("goldWeight").value) || 0;
+            let silverWeight = parseFloat(document.getElementById("silverWeight").value) || 0;
+
+            let cash = parseFloat(document.getElementById("cash").value) || 0;
+            let bank = parseFloat(document.getElementById("bank").value) || 0;
+            let business = parseFloat(document.getElementById("business").value) || 0;
+            let liabilities = parseFloat(document.getElementById("liabilities").value) || 0;
+
+            let goldValue = goldWeight * goldRatePKR;
+            let silverValue = silverWeight * silverRatePKR;
+
+            let totalAssets = goldValue + silverValue + cash + bank + business;
+
+            netWorth = totalAssets - liabilities;
+
+            /* ===== NISAB CALCULATION ===== */
+
+            let nisabSilver = 612.36 * silverRatePKR; // silver nisab in PKR
+
+            let nisabElement = document.getElementById("nisabInfo");
+
+            if (netWorth >= nisabSilver) {
+
+                zakatAmount = netWorth * 0.025;
+
+                nisabElement.innerHTML =
+                    "You are ABOVE Nisab. Zakat is obligatory upon you.";
+                nisabElement.className = "nisab-box above-nisab";
+
+                document.getElementById("result").innerHTML =
+                    "Total Zakat Payable: PKR " + zakatAmount.toFixed(2);
+
+            } else {
+
+                zakatAmount = 0;
+
+                nisabElement.innerHTML =
+                    "You are BELOW Nisab. Zakat is not obligatory.";
+                nisabElement.className = "nisab-box below-nisab";
+
+                document.getElementById("result").innerHTML =
+                    "No Zakat Due.";
+            }
+        }
+
+        /* ================= PROFESSIONAL PDF ================= */
+
+        function generatePDF() {
+
+            if (zakatAmount <= 0) {
+                showModal("Notice", "Please calculate your Zakat first.");
+                return;
+            }
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            let date = new Date().toLocaleString();
+
+            doc.setFillColor(5, 46, 38);
+            doc.rect(0, 0, 210, 30, "F");
+
+            doc.setTextColor(255, 215, 110);
+            doc.setFontSize(18);
+            doc.text("Ramadan Zakat Receipt", 60, 20);
+
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(12);
+
+            doc.text("Date: " + date, 20, 50);
+            doc.text("Net Worth: PKR " + netWorth.toFixed(2), 20, 65);
+            doc.text("Zakat (2.5%): PKR " + zakatAmount.toFixed(2), 20, 80);
+
+            doc.setTextColor(5, 46, 38);
+            doc.setFontSize(14);
+            doc.text("May Allah accept your Zakat and grant Barakah.", 20, 110);
+
+            doc.save("Ramadan_Zakat_Receipt.pdf");
+        }
+
+        /* ================= SAVE HISTORY ================= */
+
+        function saveHistory() {
+
+            if (zakatAmount <= 0) {
+                showModal("Reminder", "Please calculate before saving.");
+                return;
+            }
+
+            let history = JSON.parse(localStorage.getItem("zakatHistory")) || [];
+
+            history.push({
+                date: new Date().toLocaleString(),
+                netWorth: netWorth,
+                zakat: zakatAmount
+            });
+
+            localStorage.setItem("zakatHistory", JSON.stringify(history));
+            displayHistory();
+        }
+
+        function displayHistory() {
+
+            let history = JSON.parse(localStorage.getItem("zakatHistory")) || [];
+            let output = "";
+
+            history.forEach(item => {
+                output += `
+      <div class="history-item">
+        <strong>${item.date}</strong><br>
+        Net Worth: PKR ${item.netWorth.toFixed(2)}<br>
+        Zakat: PKR ${item.zakat.toFixed(2)}
+      </div>
+    `;
+            });
+
+            document.getElementById("history").innerHTML = output;
+        }
+
+        displayHistory();
+
+    </script>
+
+</body>
+
+</html>
