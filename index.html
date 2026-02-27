@@ -3,13 +3,27 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Zakat Calculator | PKR</title>
+    <title>Zakat Calculator</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Poppins:wght@300;400;600&display=swap"
         rel="stylesheet">
 </head>
 
 <body class="landing">
+    <canvas class="stars"></canvas>
+    <!-- ===== PAGE LOADER ===== -->
+    <div id="pageLoader">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <p class="arabic">
+                اللّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ
+            </p>
+            <p>Till website is loading, recite a Durood Shareef 🤍</p>
+        </div>
+    </div>
+
+
+
 
     <div class="overlay">
         <div class="content">
@@ -27,6 +41,38 @@
 
         </div>
     </div>
+
+    <script src="script.js"></script>
+    <script>
+        /* ================= LOADER ON PAGE LOAD ================= */
+
+        window.addEventListener("load", function () {
+            setTimeout(function () {
+                document.getElementById("pageLoader").style.opacity = "0";
+                setTimeout(function () {
+                    document.getElementById("pageLoader").style.display = "none";
+                }, 800);
+            }, 4000);
+        });
+
+        /* ================= LOADER ON PAGE CHANGE ================= */
+
+        document.querySelector(".btn").addEventListener("click", function (e) {
+            e.preventDefault();
+            const link = this.getAttribute("href");
+
+            const loader = document.getElementById("pageLoader");
+            loader.style.display = "flex";
+            loader.style.opacity = "1";
+
+            setTimeout(function () {
+                window.location.href = link;
+            }, 1000);
+        });
+
+
+
+    </script>
 
 </body>
 
