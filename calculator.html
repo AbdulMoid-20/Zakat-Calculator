@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Ramadan Zakat Calculator</title>
+    <title>Zakat Calculator</title>
     <link rel="stylesheet" href="style.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -71,7 +71,7 @@
         </div>
     </div>
 
-    <script>
+    <!-- <script>
 
         /* ================= LIVE GOLD & SILVER RATE ================= */
 
@@ -81,33 +81,35 @@
         let netWorth = 0;
 
         async function fetchRates() {
-            try {
+                try {
 
-                // Get Gold & Silver price (USD per ounce)
-                const metalRes = await fetch("https://data-asg.goldprice.org/dbXRates/USD");
-                const metalData = await metalRes.json();
+                    const metalRes = await fetch(
+                        "https://api.allorigins.win/raw?url=https://data-asg.goldprice.org/dbXRates/USD"
+                    );
+                    const metalData = await metalRes.json();
 
-                let goldUSD = metalData.items[0].xauPrice; // gold per ounce
-                let silverUSD = metalData.items[0].xagPrice; // silver per ounce
+                    let goldUSD = metalData.items[0].xauPrice;
+                    let silverUSD = metalData.items[0].xagPrice;
 
-                // Get USD to PKR rate
-                const rateRes = await fetch("https://open.er-api.com/v6/latest/USD");
-                const rateData = await rateRes.json();
+                    const rateRes = await fetch(
+                        "https://api.allorigins.win/raw?url=https://open.er-api.com/v6/latest/USD"
+                    );
+                    const rateData = await rateRes.json();
 
-                let usdToPkr = rateData.rates.PKR;
+                    let usdToPkr = rateData.rates.PKR;
 
-                // Convert ounce to gram
-                goldRatePKR = (goldUSD / 31.1035) * usdToPkr;
-                silverRatePKR = (silverUSD / 31.1035) * usdToPkr;
+                    goldRatePKR = (goldUSD / 31.1035) * usdToPkr;
+                    silverRatePKR = (silverUSD / 31.1035) * usdToPkr;
 
-                document.getElementById("liveRates").innerHTML =
-                    "Live Rates — Gold: PKR " + goldRatePKR.toFixed(0) +
-                    "/g | Silver: PKR " + silverRatePKR.toFixed(0) + "/g";
+                    document.getElementById("liveRates").innerHTML =
+                        "Live Rates — Gold: PKR " + goldRatePKR.toFixed(0) +
+                        "/g | Silver: PKR " + silverRatePKR.toFixed(0) + "/g";
 
-            } catch (error) {
-                showModal("Rate Error", "Live gold & silver rates unavailable. Please refresh.");
+                } catch (error) {
+                    showModal("Rate Error", "Live rates unavailable. Using fallback values.");
+                    useFallbackRates();
+                }
             }
-        }
 
         fetchRates();
 
@@ -255,8 +257,9 @@
 
         displayHistory();
 
-    </script>
+    </script> -->
 
+    <script src="script.js"></script>
 </body>
 
 </html>
