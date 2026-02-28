@@ -8,7 +8,10 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-/* ===== LANDING ===== */
+
+
+
+/* LANDING PAGE*/
 
 .landing {
     background: url('./assets/woman-s-hand-is-holding-many-coins.jpg') no-repeat center center/cover;
@@ -47,17 +50,27 @@ h1 {
 }
 
 .btn {
-    padding: 12px 35px;
+    display: block;
+    margin: 20px auto;
+    padding: 12px 40px;
     background: linear-gradient(45deg, #c9a227, #f5d76e);
     color: #063a2d;
     font-weight: 600;
+    font-size: medium;
     border-radius: 50px;
     text-decoration: none;
     border: none;
     cursor: pointer;
+    box-shadow: 2.5px 2.5px 8px 2px rgba(250, 208, 57, 0.603);
+    transition: all .3s ease;
 }
 
-/* ================= STAR BACKGROUND ================= */
+.btn:hover {
+    transform: translateY(-8px);
+    box-shadow: 5px 5px 8px 2px rgba(250, 208, 57, 0.6);
+}
+
+/* STAR BACKGROUND  */
 
 .stars {
     position: fixed;
@@ -69,8 +82,7 @@ h1 {
     pointer-events: none;
 }
 
-
-/* ================= LOADER ================= */
+/* LOADER */
 
 #pageLoader {
     position: fixed;
@@ -109,10 +121,12 @@ h1 {
     }
 }
 
-/* ===== CALCULATOR ===== */
+
+
+
+/*  CALCULATOION PAGE */
 
 .calculator-page {
-    /* background: linear-gradient(135deg, #052e26, #031f1a); */
     background: url('./assets/heap-chocolate-coins.jpg') no-repeat center center/cover;
     min-height: 100vh;
     padding: 20px 20px;
@@ -120,7 +134,7 @@ h1 {
     position: relative;
 }
 
-.calculator-page .overlay{
+.calculator-page .overlay {
     background: rgba(8, 40, 30, 0.75);
     position: absolute;
     top: 0;
@@ -128,8 +142,8 @@ h1 {
     width: 100%;
     height: 100%;
     display: flex;
-    /* justify-content: center; */
-    /* align-items: center; */
+    justify-content: center;
+    align-items: center;
 }
 
 .bg-img {
@@ -138,27 +152,21 @@ h1 {
     right: 0;
     width: 100%;
     height: 100%;
-    /* object-fit: ; */
     z-index: -2;
     opacity: 0.5;
 }
 
 .container {
     height: 500px;
-    /* Fixed height */
     max-width: 1000px;
     margin: 40px auto;
     overflow-y: auto;
-    /* Scroll inside container */
-
-    background: linear-gradient(135deg,
-            rgba(17, 77, 58, 0.95),
-            rgba(17, 77, 58, 0.85));
-
+    background: linear-gradient(135deg, rgba(17, 77, 58, 0.95), rgba(17, 77, 58, 0.85));
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 0 25px rgba(245, 215, 110, 0.15);
 }
+
 .form-grid {
     display: grid;
     gap: 15px;
@@ -169,6 +177,11 @@ input {
     padding: 10px;
     border-radius: 6px;
     border: none;
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgb(255, 210, 47);
 }
 
 small {
@@ -199,56 +212,7 @@ small {
     border-radius: 6px;
 }
 
-
-
-input:focus {
-    outline: none;
-    box-shadow: 0 0 10px rgb(255, 210, 47);
-}
-
-
-/* Firefox */
-.container {
-    scrollbar-width: thin;
-    scrollbar-color: #d4af37 rgba(255, 255, 255, 0.05);
-}
-
-/* Chrome, Edge, Safari */
-.container::-webkit-scrollbar {
-    width: 8px;
-}
-
-.container::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    visibility: hidden;
-}
-
-.container::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #d4af37, #f5d76e);
-    border-radius: 20px;
-    box-shadow: 0 0 8px rgba(245, 215, 110, 0.4);
-}
-
-.container::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #f5d76e, #d4af37);
-}
-
-
-/* Chrome, Edge, Safari */
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/* Firefox */
-input[type="number"] {
-    -moz-appearance: textfield;
-}
-
-
-/* ===== MODAL ===== */
+/* MODAL  */
 
 .modal {
     display: none;
@@ -303,8 +267,7 @@ input[type="number"] {
     }
 }
 
-
-/* ===== NISAB STATUS ===== */
+/* NISAB STATUS  */
 
 .nisab-box {
     margin-top: 15px;
@@ -325,4 +288,270 @@ input[type="number"] {
     background: rgba(231, 76, 60, 0.15);
     color: #e74c3c;
     border: 1px solid #e74c3c;
+}
+
+
+
+
+/* ABOUT MODAL */
+
+.about-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: none;
+    background: #f5d76e;
+    color: #063a2d;
+    font-size: medium;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 2.5px 2.5px 8px 2px rgba(250, 208, 57, 0.603);
+    transition: all .3s ease;
+}
+
+.about-btn:hover {
+    transform: translateY(-8px);
+    box-shadow: 5px 5px 8px 2px rgba(250, 208, 57, 0.6);
+}
+
+.about-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.about-card {
+    background: linear-gradient(135deg, #031f1a, #052e26);
+    padding: 40px;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    color: white;
+    box-shadow: 0 0 40px rgba(245, 215, 110, 0.25);
+    animation: fadeIn 0.4s ease;
+}
+
+.about-card h2 {
+    margin-bottom: 15px;
+    font-size: 28px;
+}
+
+.about-card p {
+    margin: 12px 0;
+    line-height: 1.6;
+}
+
+.arabic-ayah {
+    font-family: 'Amiri', serif;
+    font-size: 24px;
+    margin: 20px 0;
+    color: #f5d76e;
+}
+
+.dev-credit span {
+    color: #f5d76e;
+    font-weight: 600;
+}
+
+.sadaqah {
+    margin-top: 10px;
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+.close-btn {
+    margin-top: 25px;
+    padding: 10px 30px;
+    border-radius: 40px;
+    border: none;
+    background: #1abc9c;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 0 25px rgba(26, 188, 156, 0.5);
+}
+
+
+
+
+/* CAROUSEL */
+.carousel {
+    margin: 30px 0;
+    min-height: 110px;
+    position: relative;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+    position: relative;
+}
+
+.arabic-text {
+    font-family: 'Amiri', serif;
+    font-size: 22px;
+    color: #f5d76e;
+    margin-bottom: 10px;
+}
+
+.carousel p {
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+
+
+
+/* Chrome, Edge, Safari */
+.container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    visibility: hidden;
+}
+
+.container::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #d4af37, #f5d76e);
+    border-radius: 20px;
+    box-shadow: 0 0 8px rgba(245, 215, 110, 0.4);
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #f5d76e, #d4af37);
+}
+
+/* Chrome, Edge, Safari */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+/* ================= MOBILE DEVICES (up to 480px) ================= */
+@media (max-width: 480px) {
+
+    h1 {
+        font-size: 26px;
+    }
+
+    .arabic {
+        font-size: 20px;
+    }
+
+    .arabic-text {
+        font-size: 18px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+    }
+
+    .content {
+        padding: 0 15px;
+    }
+
+    .btn,
+    .about-btn {
+        width: 70%;
+        padding: 15px 20px;
+        font-size: 16px;
+    }
+
+    .container {
+        height: auto;
+        max-height: 85vh;
+        padding: 15px;
+        margin: 20px 10px;
+    }
+
+    input {
+        font-size: 14px;
+    }
+
+    .about-card {
+        padding: 20px;
+    }
+}
+
+
+
+/* ================= TABLET DEVICES (481px – 768px) ================= */
+@media (min-width: 481px) and (max-width: 768px) {
+
+    h1 {
+        font-size: 34px;
+    }
+
+    .arabic {
+        font-size: 22px;
+    }
+
+    .content {
+        width: 90%;
+    }
+
+    .btn,
+    .about-btn {
+        padding: 10px 30px;
+    }
+
+    .container {
+        height: auto;
+        max-height: 85vh;
+        padding: 20px;
+        margin: 30px auto;
+    }
+
+    .about-card {
+        padding: 30px;
+    }
+}
+
+
+
+/* ================= SMALL LAPTOPS (769px – 1024px) ================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+    h1 {
+        font-size: 40px;
+    }
+
+    .container {
+        height: auto;
+        max-height: 85vh;
+    }
+
+    .content {
+        width: 85%;
+    }
+}
+
+
+
+/* ================= LARGE DESKTOPS (1025px and above) ================= */
+@media (min-width: 1025px) {
+
+    .content {
+        max-width: 700px;
+    }
+
+    .container {
+        max-width: 1000px;
+    }
 }

@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zakat Calculator</title>
     <link rel="stylesheet" href="style.css">
 
@@ -14,8 +15,12 @@
     <canvas class="stars"></canvas>
 
     <img src="./assets/woman-s-hand-is-holding-many-coins.jpg" class="bg-img" alt="">
-    <div class="overlay">
 
+    
+    
+    <div class="overlay">
+        
+        <!-- <button class="about-btn" onclick="openAbout()">About This App</button> -->
         <div class="container zakat-scroll">
 
             <h2>Zakat Calculator </h2>
@@ -64,7 +69,7 @@
 
     </div>
 
-    <!-- ===== ISLAMIC MODAL ===== -->
+    <!-- Custom Modal -->
     <div id="customModal" class="modal">
         <div class="modal-content">
             <h3 id="modalTitle">Notice</h3>
@@ -73,193 +78,38 @@
         </div>
     </div>
 
-    <!-- <script>
+    <!-- ABOUT MODAL  -->
+    <!-- <div id="aboutModal" class="about-modal">
+        <div class="about-card">
 
-        /* ================= LIVE GOLD & SILVER RATE ================= */
+            <h2>About This App</h2>
 
-        let goldRatePKR = 0;
-        let silverRatePKR = 0;
-        let zakatAmount = 0;
-        let netWorth = 0;
+            <p>
+                This <strong>Ramadan Zakat Calculator</strong> is designed to help
+                Muslims calculate their Zakat easily, accurately, and peacefully.
+            </p>
 
-        async function fetchRates() {
-                try {
+            <div class="arabic-ayah">
+                خُذْ مِنْ أَمْوَالِهِمْ صَدَقَةً تُطَهِّرُهُمْ وَتُزَكِّيهِمْ بِهَا
+            </div>
 
-                    const metalRes = await fetch(
-                        "https://api.allorigins.win/raw?url=https://data-asg.goldprice.org/dbXRates/USD"
-                    );
-                    const metalData = await metalRes.json();
+            <p>
+                Features include live gold & silver rates, Nisab auto-check,
+                PDF receipt generation, saved history, and beautiful Ramadan theme.
+            </p>
 
-                    let goldUSD = metalData.items[0].xauPrice;
-                    let silverUSD = metalData.items[0].xagPrice;
+            <p class="dev-credit">
+                Developed by <span>Abdul Moid</span>
+            </p>
 
-                    const rateRes = await fetch(
-                        "https://api.allorigins.win/raw?url=https://open.er-api.com/v6/latest/USD"
-                    );
-                    const rateData = await rateRes.json();
+            <p class="sadaqah">
+                Sadaqah Jariyah 🤍
+            </p>
 
-                    let usdToPkr = rateData.rates.PKR;
+            <button class="close-btn" onclick="closeAbout()">Close</button>
 
-                    goldRatePKR = (goldUSD / 31.1035) * usdToPkr;
-                    silverRatePKR = (silverUSD / 31.1035) * usdToPkr;
-
-                    document.getElementById("liveRates").innerHTML =
-                        "Live Rates — Gold: PKR " + goldRatePKR.toFixed(0) +
-                        "/g | Silver: PKR " + silverRatePKR.toFixed(0) + "/g";
-
-                } catch (error) {
-                    showModal("Rate Error", "Live rates unavailable. Using fallback values.");
-                    useFallbackRates();
-                }
-            }
-
-        fetchRates();
-
-        /* ===== MODAL FUNCTIONS ===== */
-
-        function showModal(title, message) {
-            document.getElementById("modalTitle").innerText = title;
-            document.getElementById("modalMessage").innerText = message;
-            document.getElementById("customModal").style.display = "flex";
-        }
-
-        function closeModal() {
-            document.getElementById("customModal").style.display = "none";
-        }
-
-
-        /* ================= CALCULATION ================= */
-
-        function calculateZakat() {
-
-            if (goldRatePKR === 0 || silverRatePKR === 0) {
-                showModal("Loading", "Live rates are still loading. Please wait.");
-                return;
-            }
-
-
-            let goldWeight = parseFloat(document.getElementById("goldWeight").value) || 0;
-            let silverWeight = parseFloat(document.getElementById("silverWeight").value) || 0;
-
-            let cash = parseFloat(document.getElementById("cash").value) || 0;
-            let bank = parseFloat(document.getElementById("bank").value) || 0;
-            let business = parseFloat(document.getElementById("business").value) || 0;
-            let liabilities = parseFloat(document.getElementById("liabilities").value) || 0;
-
-            let goldValue = goldWeight * goldRatePKR;
-            let silverValue = silverWeight * silverRatePKR;
-
-            let totalAssets = goldValue + silverValue + cash + bank + business;
-
-            netWorth = totalAssets - liabilities;
-
-            /* ===== NISAB CALCULATION ===== */
-
-            let nisabSilver = 612.36 * silverRatePKR; // silver nisab in PKR
-
-            let nisabElement = document.getElementById("nisabInfo");
-
-            if (netWorth >= nisabSilver) {
-
-                zakatAmount = netWorth * 0.025;
-
-                nisabElement.innerHTML =
-                    "You are ABOVE Nisab. Zakat is obligatory upon you.";
-                nisabElement.className = "nisab-box above-nisab";
-
-                document.getElementById("result").innerHTML =
-                    "Total Zakat Payable: PKR " + zakatAmount.toFixed(2);
-
-            } else {
-
-                zakatAmount = 0;
-
-                nisabElement.innerHTML =
-                    "You are BELOW Nisab. Zakat is not obligatory.";
-                nisabElement.className = "nisab-box below-nisab";
-
-                document.getElementById("result").innerHTML =
-                    "No Zakat Due.";
-            }
-        }
-
-        /* ================= PROFESSIONAL PDF ================= */
-
-        function generatePDF() {
-
-            if (zakatAmount <= 0) {
-                showModal("Notice", "Please calculate your Zakat first.");
-                return;
-            }
-
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-
-            let date = new Date().toLocaleString();
-
-            doc.setFillColor(5, 46, 38);
-            doc.rect(0, 0, 210, 30, "F");
-
-            doc.setTextColor(255, 215, 110);
-            doc.setFontSize(18);
-            doc.text("Ramadan Zakat Receipt", 60, 20);
-
-            doc.setTextColor(0, 0, 0);
-            doc.setFontSize(12);
-
-            doc.text("Date: " + date, 20, 50);
-            doc.text("Net Worth: PKR " + netWorth.toFixed(2), 20, 65);
-            doc.text("Zakat (2.5%): PKR " + zakatAmount.toFixed(2), 20, 80);
-
-            doc.setTextColor(5, 46, 38);
-            doc.setFontSize(14);
-            doc.text("May Allah accept your Zakat and grant Barakah.", 20, 110);
-
-            doc.save("Ramadan_Zakat_Receipt.pdf");
-        }
-
-        /* ================= SAVE HISTORY ================= */
-
-        function saveHistory() {
-
-            if (zakatAmount <= 0) {
-                showModal("Reminder", "Please calculate before saving.");
-                return;
-            }
-
-            let history = JSON.parse(localStorage.getItem("zakatHistory")) || [];
-
-            history.push({
-                date: new Date().toLocaleString(),
-                netWorth: netWorth,
-                zakat: zakatAmount
-            });
-
-            localStorage.setItem("zakatHistory", JSON.stringify(history));
-            displayHistory();
-        }
-
-        function displayHistory() {
-
-            let history = JSON.parse(localStorage.getItem("zakatHistory")) || [];
-            let output = "";
-
-            history.forEach(item => {
-                output += `
-      <div class="history-item">
-        <strong>${item.date}</strong><br>
-        Net Worth: PKR ${item.netWorth.toFixed(2)}<br>
-        Zakat: PKR ${item.zakat.toFixed(2)}
-      </div>
-    `;
-            });
-
-            document.getElementById("history").innerHTML = output;
-        }
-
-        displayHistory();
-
-    </script> -->
+        </div>
+    </div> -->
 
     <script src="script.js"></script>
 </body>

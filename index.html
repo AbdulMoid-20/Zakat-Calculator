@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zakat Calculator</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Poppins:wght@300;400;600&display=swap"
@@ -10,8 +11,10 @@
 </head>
 
 <body class="landing">
+
     <canvas class="stars"></canvas>
-    <!-- ===== PAGE LOADER ===== -->
+
+    <!-- PAGE LOADER -->
     <div id="pageLoader">
         <div class="loader-content">
             <div class="spinner"></div>
@@ -22,27 +25,81 @@
         </div>
     </div>
 
-
-
-
     <div class="overlay">
         <div class="content">
-
             <h3 class="arabic">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</h3>
 
             <h1>Zakat Calculator</h1>
 
             <p class="subtitle">
-                Calculate your Zakat in Pakistani Rupees (PKR)
+                Calculate your Zakat peacefully and accurately,
                 with live gold & silver rates.
             </p>
 
-            <a href="calculator.html" class="btn">Start Calculation</a>
+            <div class="carousel">
+                <div class="slide active">
+                    <div class="arabic-text">
+                        وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ
+                    </div>
+                    <p>“Establish prayer and give Zakat.” — (Qur’an 2:110)</p>
+                </div>
+
+                <div class="slide">
+                    <div class="arabic-text">
+                        خُذْ مِنْ أَمْوَالِهِمْ صَدَقَةً تُطَهِّرُهُمْ
+                    </div>
+                    <p>“Take from their wealth a charity by which you purify them.” — (Qur’an 9:103)</p>
+                </div>
+
+                <div class="slide">
+                    <div class="arabic-text">
+                        بُنِيَ الإِسْلَامُ عَلَى خَمْسٍ
+                    </div>
+                    <p>“Islam is built upon five… giving Zakat.” — (Bukhari & Muslim)</p>
+                </div>
+            </div>
+
+            <button class="about-btn" onclick="openAbout()">About This App</button>
+            <button class="btn" onclick="window.location.href='calculator.html'">Start Calculation</button>
 
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- ABOUT MODAL  -->
+    <div id="aboutModal" class="about-modal">
+        <div class="about-card">
+
+            <h2>About This App</h2>
+
+            <p>
+                This <strong>Ramadan Zakat Calculator</strong> is designed to help
+                Muslims calculate their Zakat easily, accurately, and peacefully.
+            </p>
+
+            <div class="arabic-ayah">
+                خُذْ مِنْ أَمْوَالِهِمْ صَدَقَةً تُطَهِّرُهُمْ وَتُزَكِّيهِمْ بِهَا
+            </div>
+
+            <p>
+                Features include live gold & silver rates, Nisab auto-check,
+                PDF receipt generation, saved history, and beautiful Ramadan theme.
+            </p>
+
+            <p class="dev-credit">
+                Developed by <span>Abdul Moid</span>
+            </p>
+
+            <p class="sadaqah">
+                Sadaqah Jariyah 🤍
+            </p>
+
+            <button class="close-btn" onclick="closeAbout()">Close</button>
+
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+
     <script>
         /* ================= LOADER ON PAGE LOAD ================= */
 
@@ -70,6 +127,20 @@
             }, 1000);
         });
 
+
+        /* ================= AYAH CAROUSEL ================= */
+
+        let slides = document.querySelectorAll(".slide");
+        let currentSlide = 0;
+
+        function showNextSlide() {
+            slides[currentSlide].classList.remove("active");
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add("active");
+        }
+
+        // Change every 5 seconds
+        setInterval(showNextSlide, 5000);
 
 
     </script>

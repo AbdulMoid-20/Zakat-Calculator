@@ -1,11 +1,14 @@
 const TWELVE_HOURS = 12 * 60 * 60 * 1000;
+const canvas = document.querySelector(".stars");
+const ctx = canvas.getContext("2d");
 
 let goldRatePKR = 0;
 let silverRatePKR = 0;
 let zakatAmount = 0;
 let netWorth = 0;
+let starsArray = [];
 
-/* ================= MODAL ================= */
+/*  MODALS  */
 
 function showModal(title, message) {
     document.getElementById("modalTitle").innerText = title;
@@ -17,6 +20,19 @@ function closeModal() {
     document.getElementById("customModal").style.display = "none";
 }
 
+function openAbout() {
+    const modal = document.getElementById("aboutModal");
+    if (modal) {
+        modal.style.display = "flex";
+    }
+}
+
+function closeAbout() {
+    const modal = document.getElementById("aboutModal");
+    if (modal) {
+        modal.style.display = "none";
+    }
+}
 
 function hasAnyInput() {
     const fields = ["goldWeight", "silverWeight", "cash", "bank", "business", "liabilities"];
@@ -218,16 +234,10 @@ function displayHistory() {
     document.getElementById("history").innerHTML = output;
 }
 
-
-/* ================= STAR PARTICLE ANIMATION ================= */
-
-const canvas = document.querySelector(".stars");
-const ctx = canvas.getContext("2d");
+// STAR PARTICLE ANIMATION 
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-
-let starsArray = [];
 
 class Star {
     constructor() {
@@ -269,9 +279,6 @@ function animateStars() {
     requestAnimationFrame(animateStars);
 }
 
-initStars();
-animateStars();
-
 window.addEventListener("resize", function () {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -280,6 +287,7 @@ window.addEventListener("resize", function () {
 
 
 
-
+initStars();
+animateStars();
 loadRates();
 displayHistory();
